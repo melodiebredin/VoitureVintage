@@ -2,12 +2,18 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Vehicle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class VehicleType extends AbstractType
 {
@@ -19,7 +25,7 @@ class VehicleType extends AbstractType
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez la marque de votre vehicule']
             ])
-            ->add('year', TextType::class, [
+            ->add('year', IntegerType::class, [
                 'label' => 'Année',
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez l\'année de la voiture']
@@ -29,7 +35,7 @@ class VehicleType extends AbstractType
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez le model de la voiture']
             ])
-            ->add('description', TextArea::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'Caractéristique',
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez les caratéristique de la voiture']
@@ -39,11 +45,16 @@ class VehicleType extends AbstractType
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez la ville de la voiture']
             ])
-            ->add('category', EntityType::class, [
-                'label' => 'catégory',
-                'required' => true,
-                'attr' => ['placeholder' => 'Entrez la catégory de vôtre voiture']
+            ->add('price', MoneyType::class, [
+                'label' => 'Prix',
+                'attr' => ['placeholder' => 'Entrez un prix']
             ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                 'choice_label' => 'name',
+                 'required' => true,
+                 'attr' => ['placeholder' => 'Entrez la catégory de vôtre voiture']
+             ])
             ->add('fuel', TextType::class, [
                 'label' => 'carburant',
                 'required' => true,
@@ -53,21 +64,6 @@ class VehicleType extends AbstractType
                 'label' => 'Photo',
                 'required' => true,
                 'attr' => ['placeholder' => 'Entrez votre photo']
-            ])
-            ->add('createdAt',SubmitType::class,[
-                'label' => 'Créer',
-                'required' => true,
-                'attr' => ['class' => 'btn btn-warning d-block mx-auto my-3 col-4']
-            ])
-            ->add('updatedAt',SubmitType::class,[
-                'label' => 'Modifier',
-                'required' => true,
-                'attr' => ['class' => 'btn btn-warning d-block mx-auto my-3 col-4']
-            ])
-            ->add('deletedAt',SubmitType::class,[
-                    'label' => 'supprimer',
-                    'required' => true,
-                    'attr' => ['class' => 'btn btn-warning d-block mx-auto my-3 col-4']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Ajouter',
@@ -79,6 +75,8 @@ class VehicleType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vehicle::class,
+            'allow_file_upload' => true,
+
         ]);
     }
 }

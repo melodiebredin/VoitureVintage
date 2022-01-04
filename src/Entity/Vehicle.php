@@ -88,7 +88,13 @@ class Vehicle
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPayed;
+    private $isPayed=false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="vehicles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
 
 
@@ -284,6 +290,18 @@ class Vehicle
     public function setIsPayed(bool $isPayed): self
     {
         $this->isPayed = $isPayed;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

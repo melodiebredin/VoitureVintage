@@ -29,6 +29,11 @@ class Category
      */
     private $vehicles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $alias;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
@@ -77,6 +82,18 @@ class Category
                 $vehicle->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(string $alias): self
+    {
+        $this->alias = $alias;
 
         return $this;
     }
