@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}{% for vehicle in singleVehicle %} {{ vehicle.brand }} {% endfor %}{% endblock %}
+
+
+{% block body %}
+
+
+{% for vehicle in singleVehicle %}
+
+<div class="container">
+    <div class="navbar-expand-md mt-2">
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <h4 class="me-auto">{{vehicle.model}}</h4>
+            <h4>{{vehicle.price}} €</h4>
+        </div>
+    <hr>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+           
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <h1 class="text-center">{{vehicle.brand}}</h1>
+
+            <br>
+            <p>{{vehicle.description}}</p>
+            <br>
+            <p>Couleur: {{vehicle.town}}</p>
+            </br>
+            <p>Capacité: {{vehicle.fuel}} Go</p>
+
+        </div>
+          {{ render(url('form_comment', {'id': article.id})) }}
+
+    {% endfor %}
+
+
+    {% endblock %}
