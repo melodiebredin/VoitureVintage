@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -130,5 +131,29 @@ class VehicleController extends AbstractController
             return $this->render('vehicle/vehicle.html.twig',[
                 'form'=> $form->createView(),
             ]);
+        }
+    /**
+     * @Route("/vehicle/view", name="vehicle_view")
+     */
+    public function viewVehicles(Request $request): Response
+    {
+
+        $vehicle = new Vehicle();
+        $form = $this->createForm(VehicleType::class,$vehicle);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+        $vehicle = $form->getData();
+        $this->entityManager->persist($vehicle);
+        $this->entityManager->flush();
+    
+    }
+        return $this->render(
+            'vehicle/vehicle.html.twig',
+            [
+                'form' => $form->createView(),
+                'vehicle' => $vehicle,
+            ]
+        );
     }
 }
