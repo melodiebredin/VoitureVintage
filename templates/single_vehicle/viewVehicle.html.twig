@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}{% for vehicle in singleVehicle %} {{ vehicle.name }} - VoitureVintage {% endfor %}{% endblock %}
+
+{% block title %}{% endblock %}
 
 
 {% block body %}
@@ -9,39 +10,58 @@
 
 {% for vehicle in singleVehicle %}
 
-<div class="container">
-    <div class="navbar-expand-md mt-2">
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <h4 class="me-auto">{{vehicle.name}}</h4>
-            <h4>{{vehicle.price}} €</h4>
-        </div>
+<li class="list-group-item text-center text-muted">Crée le : {{ vehicle.createdAt | date('d/m/Y') }} | Par : {{ vehicle.user.firstname }} {{ vehicle.user.lastname }}</li>
+  
     <hr>
     </div>
-
+    <div class= "container-fluid">
     <div class="row">
-        <div class="col-md-8">
-            <div>
-                <div class="card-content">
-                    <div class="card-body">
-                        <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}">
-                    </div>
-                </div>
-
+    <div class ="col-sm-1"></div>
+            <div class ="col-sm-7">
+            <div class="card">
+            <h1 class="text-center">{{vehicle.model}}</h1></div>
+            <h1 class="text-center">{{vehicle.brand}}</h1> ajouter le nom
+            <br>
+             <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}"  width="400px">
+            <br>
             </div>
-
-        </div>
-        <div class="col-md-4">
-            <h1 class="text-center">{{vehicle.name}}</h1>
-
+            <div class ="col-sm-3 bg-primary">
             <br>
+        <div class="card">
+            <p>Année: {{vehicle.year}}</p>
+            </div>
+             <br>
+            <div class="card">
+            <p>Carburant: {{vehicle.fuel}}</p>
+            </div>
+             <br>
+           <div class="card">
+            <p>Ville: {{vehicle.town}}</p>
+              </div>
+              <br>
+           <div class="card">
+            <p>Prix: {{vehicle.price}}</p>
+             </div>
+             <br>
+           <div class="card">
             <p>{{vehicle.description}}</p>
+            </div>
+             <br>
             <br>
-            <p>Couleur: {{vehicle.color}}</p>
-            </br>
-            <p>Capacité: {{vehicle.capacity}} Go</p>
-
+        <div>
+         <a href="{{ path( 'form_message', {'id' : vehicle.id} ) }}" class="btn btn-warning d-block mx-auto">Envoyer un message</a>
         </div>
+        </div>
+        </div>
+        </div>
+          </div>
+          </div>
+ 
+
+
+
   
+
 
     {% endfor %}
 

@@ -311,6 +311,11 @@ class Vehicle
         return $this;
     }
 
+    public function __toString() {
+        return $this->getUser();
+    }
+
+
     public function getName(): ?string
     {
         return $this->name;
@@ -322,6 +327,7 @@ class Vehicle
 
         return $this;
     }
+
 
 
 }
