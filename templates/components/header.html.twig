@@ -13,7 +13,7 @@
  >
 </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{path('dashboard')}}">Dashboard</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 {% if not app.user %} {# Si l'utilisateur n'est pas connecté on affiche inscription et connexion #}
                                 <li><a class="dropdown-item" href="{{ path('register') }}">Inscription</a></li>
