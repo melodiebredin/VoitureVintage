@@ -77,7 +77,7 @@
                 <td>{{vehicle.town}}</td>
                 <td>{{vehicle.price}}€</td>
                 <td>{{vehicle.fuel}}</td>
-                <td> <img style="width:100px;" src="{{asset('uploads/' ~ vehicle.picture)}}" alt=""> </td>
+                <td> <img class="img-custom" style="width:80px; height:80px;" src="{{asset('uploads/' ~ vehicle.picture)}}" alt=""> </td>
                 <td>
                     <a href="{{path('delete_vehicle',{'id': vehicle.id })}}"><i style="color: black;" class="bi bi-trash"></i></a> 
                 </td>
@@ -104,6 +104,7 @@
                 <td>{{category.name}}</td>
                 
                 <td>
+                    <a href="{{path('edit_category',{'id': category.id })}}"><i style="color: black;" class="bi bi-pencil-square"></i></a> |
                     <a href="{{path('delete_category',{'id': category.id })}}" onclick="return confirm('Voulez-vous vraiment supprimer cette catégorie ?')"><i style="color: black;" class="bi bi-trash"></i></a> 
                 </td>
 
