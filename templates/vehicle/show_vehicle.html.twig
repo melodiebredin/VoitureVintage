@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SinglevehicleController!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+    <div  class="col-sm-12 col-lg-12 col-xl-12 mt-4">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {% if label == 'success' %}
+                            <span class="alert-inner--icon"><i class="fe fe-thumbs-up"></i></span>
+                        {% else %}
+                            <span class="alert-inner--icon"><i class="fe fe-thumbs-down"></i></span>
+                        {% endif %}
+                        <span class="alert-inner--text"><strong>{{ label | title }} : </strong> {{ message | raw }}</span>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="col-10 my-4 mx-auto">
+
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title text-center mb-5">{{vehicle.title}}</h1>
+                    <p class="h4 text-center mb-3 text-secondary">{{vehicle.subtitle}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center text-muted">Crée le : {{ vehicle.createdAt | date('d/m/Y') }} | Par : </li>
+                </ul>
+                <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}" alt="{{ article.title }}">
+                <div class="card-body">
+                    <p class="card-text my-4 col-10 mx-auto">{{vehicle.description}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {{render(url('form_comment',{'id': vehicle.id})) }}
+
+    {% if commentaries  is not null %}
+
+    <div class="row">
+     <div class="col-8">
+
+     {%for commentary in commentaries %}
+      <p class="bg-secondary">{{commentary.comment}}</p>
+     {%endfor%}
+
+    {% endif %}
+{% endblock %}
