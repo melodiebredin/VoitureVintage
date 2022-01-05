@@ -5,8 +5,14 @@
 {% block body %}
 
 
+        {{ form_start(form, { 'attr': { novalidate: 'novalidate', action: path('form_message', { 'id': app.request.attributes.get('id')
+  }) } } ) }}
+        
 
-    {{form(form)}}
+        {{ form_row(form.message) }}
+
+
+        {{ form_end(form) }}
     
 
 {% endblock %}

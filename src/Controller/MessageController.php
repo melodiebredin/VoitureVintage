@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use DateTime;
-use App\Entity\User;
+use App\Entity\Vehicle;
 use App\Entity\Message;
 use App\Form\MessageType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,11 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MessageController extends AbstractController
 {
     /**
-     * @Route("/form_message", name="form_message", methods={"GET|POST"})
+     * @Route("/add_message/?vehicule_id={id}", name="form_message", methods={"GET|POST"})
      * @param Request $request
      * @return Response
      */
-    public function addMessage( Request $request, EntityManagerInterface $entityManager): Response
+    public function addMessage(Vehicle $vehicule, Request $request, EntityManagerInterface $entityManager): Response
     {
         $message = new Message();
 
@@ -30,16 +30,22 @@ class MessageController extends AbstractController
             
                 $message = $form->getData();
 
-
+                // $message->setVehicule($this->getVehicle());
+                $message->setAuthor($this->getUser());
                 $message->setCreatedAt(new DateTime());
 
-
+                $message->setVehicule($vehicule);
 
 
                 $entityManager->persist($message);
                 $entityManager->flush();
 
-                $this->addFlash('success', "Vous avez commentez l'article !");
+                $this->addFlash('success', "Vous avez commentez l'annonce !");
+                return $this->redirectToRoute('single_vehicle', 
+                [
+                 'id' => $vehicule->getId()
+        ]);
+
 
         }
 

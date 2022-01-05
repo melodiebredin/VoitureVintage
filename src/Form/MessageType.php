@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,9 +17,6 @@ class MessageType extends AbstractType
             ->add('message', TextareaType::class, [
             'attr' => [
                 'placeholder' => 'Écrivez ici votre message'
-            ],
-            'constraints' => [
-                new NotBlank()
             ],
             ])
             ->add('submit', SubmitType::class, [
