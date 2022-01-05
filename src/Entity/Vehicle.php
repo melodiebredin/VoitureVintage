@@ -96,6 +96,11 @@ class Vehicle
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
 
 
     public function __construct()
@@ -305,6 +310,24 @@ class Vehicle
 
         return $this;
     }
+
+    public function __toString() {
+        return $this->getUser();
+    }
+
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
 
 
 }

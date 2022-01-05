@@ -34,6 +34,8 @@ class Category
      */
     private $alias;
 
+
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
@@ -97,4 +99,9 @@ class Category
 
         return $this;
     }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
 }

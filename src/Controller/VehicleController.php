@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -79,6 +80,7 @@ class VehicleController extends AbstractController
 
 
 
+
         return $this->render('vehicle/vehicle.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -96,7 +98,12 @@ class VehicleController extends AbstractController
         $this->addFlash('success', 'votre annonce a été supprimée !');
 
         return $this->redirectToRoute('account');
-    }
+
+            return $this->render('vehicle/vehicle.html.twig',[
+                'form'=> $form->createView(),
+            ]);
+        }
+
 
 
    /**
