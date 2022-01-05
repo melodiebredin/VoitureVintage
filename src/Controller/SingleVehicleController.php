@@ -24,4 +24,5 @@ class SingleVehicleController extends AbstractController
             'singleVehicle' => $singleVehicle,
         ]);
     }
+
 }

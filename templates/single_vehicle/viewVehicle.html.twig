@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 
+
 {% block title %}{% endblock %}
 
 
@@ -8,6 +9,7 @@
 
 
 {% for vehicle in singleVehicle %}
+
 <li class="list-group-item text-center text-muted">Crée le : {{ vehicle.createdAt | date('d/m/Y') }} | Par : {{ vehicle.user.firstname }} {{ vehicle.user.lastname }}</li>
   
     <hr>
@@ -55,6 +57,11 @@
           </div>
           </div>
  
+
+
+
+  
+
 
     {% endfor %}
 
