@@ -62,10 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $vehicles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Vehicle::class, mappedBy="favoris")
+     */
+    private $favoris;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->vehicles = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,6 +258,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Vehicle[]
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Vehicle $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->addFavori($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Vehicle $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            $favori->removeFavori($this);
+        }
+
+        return $this;
+    }
+
+
+
+
+
 
 
 }
