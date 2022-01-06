@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
+use App\Entity\Message;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -106,11 +108,11 @@ class VehicleController extends AbstractController
 
 
 
-   /**
+    /**
      * @Route("/show/vehicle", name="show_article")
      * @return Response
      */
-    public function showArticle(): Response
+    public function showVehicle(): Response
     {
         $vehicle = $this->entityManager->getRepository(Vehicle::class)->findBy(['user'=>$this->getUser()]);
         // dd($vehicle);
@@ -121,6 +123,39 @@ class VehicleController extends AbstractController
        
         ]);
     }
+
+       /**
+     * @Route("/show/message", name="show_message")
+     * @return Response
+     */
+    public function showMessage(): Response
+    {
+        $message = $this->entityManager->getRepository(Message::class)->findAll();
+    
+
+        
+        return $this->render('account/mes_messages.html.twig', [
+            'messages' => $message,
+       
+        ]);
+    }
+
+    /**
+     * @Route("/supprimer/message/{id}", name="delete_message")
+     * @param message $message
+     * @return Response
+     */
+    public function deleteMessage(Message $message): Response
+    {
+        $this->entityManager->remove($message);
+        $this->entityManager->flush();
+
+        $this->addFlash('success', 'votre message a été supprimée !');
+
+        // return $this->redirectToRoute('account');
+
+        return $this->redirectToRoute('account');
+        }
 
 
 }
