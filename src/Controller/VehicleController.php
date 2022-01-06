@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,17 +12,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 class VehicleController extends AbstractController
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
 
     {
         $this->entityManager = $entityManager;
     }
-    
+
     /**
      * @Route("/vehicle", name="vehicle")
      */
@@ -31,129 +36,132 @@ class VehicleController extends AbstractController
         $form = $this->createForm(VehicleType::class, $vehicle);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
-             $vehicle = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vehicle = $form->getData();
 
-             $vehicle->setUser($this->getUser());
-             $vehicle->setCreatedAt(new \DateTime());
+            $vehicle->setUser($this->getUser());
+            $vehicle->setCreatedAt(new \DateTime());
 
- # Coder ici la logique pour uploader la photo
-
-
-            // On rècupère le fichier  du formulaire grâce à getData().Cela nous retourne un objet de type UploadedFile.
 
             $file = $form->get('picture')->getData();
 
 
 
-            //dd($file);
-            //Condition qui vérifie si un fichier est présent dans le formulaire.
             if ($file) {
 
 
-                //Générer une contrainte d'Upload. On déclare un array avec deux valeurs de type string qui sont les MimeType autorisés.
-                //Vous retrouvez tous les Mimetype existant sur internet (Mozilla developper)
-                //$allowedMimeType = ['image/jpeg', 'image/png'];
 
-
-                //La fonction native in_array() permet de vérifier deux valeurs(2 arguments attendus )
-                //if (in_array($file->getMimeType(), $allowedMimeType)) {
-
-
-                #Nous allons construire le nouveau nom du fichier 
-                //On stocke dans une variable $originalFilename le nom du fichier.
-                //On utilise encore une fonction native pathinfo()
-
-                // //$originalFilename = pathinfo(
-                //     $file->getClientOriginalName(),
-
-                //     PATHINFO_FILENAME
-                // );
-
-
-                #récupération de l'extension pour pouvoir reconstruire le nom quelques lignes après.
-                //On utilise la concaténation pour ajouter un point '.' 
                 $extension = '.' . $file->guessExtension();
 
-                #Assainissement du nom grâce au slugger fourni par Symfony pour la construction du nouveau nom
+
 
                 $safeFilename = $slugger->slug($vehicle->getBrand());
-                //$safeFilename = $slugger->slug($originalFilename);
 
 
-                #construction du nouveau nom
-                //uniqid() est une fonction native qui permet de générer un ID unique.
+
+
                 $newFilename = $safeFilename . '_' . uniqid() . $extension;
 
-                //dd($newFilename);
 
-
-                //On utilise un try {} catch {} lorsqu'on appelle une méthode qui lance une erreur.
 
                 try {
 
-                    /*On appelle la méthode move() de UploadedFile pour pouvoir déplacer le fichier dans son dossier de destination.
-                        Le dossier de destination a été paramétré dans service.yaml
-                        
-                        /!\ATTENTION :
-
-                        La méthode move () lance une erreur de type FileException.
-                        On attrape cette erreur dans le catch(FileException $exception)
-                        */
 
                     $file->move($this->getParameter('uploads_dir'), $newFilename);
 
 
-                    // On set la nouvelle valeur (nom du fichier) de la propriété picture de notre objet Article.
+
                     $vehicle->setPicture($newFilename);
                 } catch (FileException $exception) {
-                    // code à éxécuter si une erreur est attrapée.
-
-
-
                 }
-                // }
-                // // Si ce n'est pas le bon type de fichier uploadé, alors on affiche un message et on redirige.
-
-                // else {
-
-                //     $this->addFlash('warning', 'Les types de fichier autorisés sont : .jpeg / .png');
-                //     return $this->redirectToRoute('create_article');
-                // }
             }
 
             $this->entityManager->persist($vehicle);
             $this->entityManager->flush();
         }
-        
 
 
-            return $this->render('vehicle/vehicle.html.twig',[
-                'form'=> $form->createView(),
-            ]);
-        }
+
+
+        return $this->render('vehicle/vehicle.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
     /**
-     * @Route("/vehicle/view", name="vehicle_view")
+     * @Route("/supprimer/vehicle/{id}", name="delete_vehicle")
+     * @param vehicle $vehicle
+     * @return Response
      */
-    public function viewVehicles(Request $request): Response
+    public function deleteVehicle(Vehicle $vehicle): Response
     {
-
-        $vehicle = new Vehicle();
-        $form = $this->createForm(VehicleType::class,$vehicle);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-        $vehicle = $form->getData();
-        $this->entityManager->persist($vehicle);
+        $this->entityManager->remove($vehicle);
         $this->entityManager->flush();
-    
+
+        $this->addFlash('success', 'votre vehicle a été supprimée !');
+
+        return $this->redirectToRoute('account');
+
+            return $this->render('vehicle/vehicle.html.twig');
+        }
+
+
+
+   /**
+     * @Route("/show/vehicle", name="show_vehicle")
+     * @return Response
+     */
+    public function showVehicle(): Response
+    {
+        $vehicle = $this->entityManager->getRepository(Vehicle::class)->findBy(['user'=>$this->getUser()]);
+        // dd($vehicle);
+
+        
+        return $this->render('account/mes_annonces.html.twig', [
+            'vehicles' => $vehicle,
+       
+        ]);
     }
-        return $this->render(
-            'vehicle/vehicle.html.twig',
-            [
-                'form' => $form->createView(),
-                'vehicle' => $vehicle,
-            ]
-        );
+
+    /**
+     * @Route("/favoris/ajout/{id}", name="ajout_favoris")
+     */
+    public function ajoutFavoris(Vehicle $vehicle)
+    {
+        
+        $vehicle->addFavori($this->getUser());
+
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
     }
+
+    /**
+     * @Route("/favoris/retrait/{id}", name="retrait_favoris")
+     */
+    public function retraitFavoris(Vehicle $vehicle)
+    {
+        
+        $vehicle->removeFavori($this->getUser());
+
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+/**
+     * @Route("/show/favoris", name="show_favoris")
+     * @return Response
+     */
+    public function showFavoris(): Response
+    {
+        $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
+        //dd($favoris);
+
+        
+        return $this->render('account/mes_favoris.html.twig', [
+            'favoris' => $favoris,
+       
+        ]);
+    }
+
 }

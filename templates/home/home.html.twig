@@ -7,13 +7,12 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                   
-                   
-                   {% for vehicle in vehicles %}
+
+                {% for vehicle in vehicles %}
                     <div class="col mb-5">
                         <div class="card h-80">
                             <!-- vehicle image-->
-                            <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}">
+                            <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}" width="200px">
 
 
                             <!-- vehicle details-->
@@ -22,13 +21,13 @@
                                     <!-- vehicle name-->
                                     <h5 class="fw-bolder">{{vehicle.name}}</h5>
                                     <!-- vehicle price-->
-                                     
                             {{vehicle.price}}€
                                 </div>
                             </div>
                             <!--vehicle  actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View vehicle</a></div>
+
                             </div>
                         </div>
                     </div>
@@ -39,9 +38,35 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
+                                <div>
+                                    {% if is_granted("ROLE_USER") %}
+                                    {% set isFavorite = false %}
+							{% for favoris in vehicle.favoris %}
+                                {% if favoris.id == app.user.id %}
+                            {% set isFavorite = true %}
+                        {% endif %}    
+                            {% endfor %}
+
+                    {% if isFavorite %}
+                        <a href="{{ path('retrait_favoris', {id: vehicle.id}) }}"><i style="color: red;" class="bi bi-heart-fill"></i></a>
+                    {% else %}
+                        <a href="{{ path('ajout_favoris', {id: vehicle.id}) }}"><i style="color: red;" class="bi bi-heart"></i></a>
+                    {% endif %}
+
+                {% else %}
+                    <i class="bi bi-heart"></i>
+                {% endif %}
+                
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+            {% endfor %}
+</section>
 
 {% endblock %}
 
