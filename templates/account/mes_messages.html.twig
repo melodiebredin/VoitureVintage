@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello mes messages !{% endblock %}
+
+{% block body %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">date</th>
+                    <th scope="col">auteur</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Annonce</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <tr>
+                        <td>{{ message.createdAt | date('d/m/Y') }}
+                        </td>
+                        <td>{{message.author.firstname}} {{message.author.lastname}}
+  
+                        </td>
+
+                        <td title="{{message.message}}">
+                            {{message.message | length > 40 ? message.message|slice(0, 40) ~ '...' : message.message}}
+                        </td>
+                        <td>{{message.vehicule.brand}}
+
+                        </td>
+                        <td>
+                            <a href="{{ path( 'delete_message', {'id' : message.id} ) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette annonce ?')">
+                            <i style="color: black;" class="bi bi-trash"></i></a> 
+
+</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        {% endblock %}

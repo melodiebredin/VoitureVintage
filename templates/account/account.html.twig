@@ -4,16 +4,10 @@
 
 {% block body %}
 <div class="container">
-    <div class="navbar navbar navbar-expand-md ">
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <h4 class="me-auto">Compte</h4>
-            <a style="text-decoration: none;" href="{{path('app_logout')}}">Se déconnecter</a>
-        </div>
-    </div>
-    <hr>
-    </br>
-    </br>
-    <h1 class="text-center"> {{app.user.firstname}}</h1>
+
+    <div class="card" style="border-radius: 15px;">
+    <h1 class="text-center"> Bienvenue {{app.user.firstname}} {{app.user.lastname}}</h1>
+</div>
 </div>
 <section class="vh-100 bg-image" style="background-color: #C7C8C9;">
   
@@ -24,10 +18,16 @@
             </div>
               </div>
 
+              <div class="card" style="border-radius: 15px;"></div>
+              <div>
+              <a href="{{path('show_message')}}" class="btn mb-2 mb-md-0 btn-outline-secondary btn-block">Voir mes messages</a>
+
+
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
               <a href="" class="btn mb-2 mb-md-0 btn-outline-secondary btn-block">Voir mes messages</a>
             </div>
+
               </div>
   
           <div class="card" style="border-radius: 15px;">

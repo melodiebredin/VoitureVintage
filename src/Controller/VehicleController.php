@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Entity\Message;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
 use App\Form\EditVehicleType;
@@ -107,6 +108,7 @@ class VehicleController extends AbstractController
 
 
 
+
    /**
      * @Route("/show/vehicle", name="show_vehicle")
      * @return Response
@@ -122,6 +124,20 @@ class VehicleController extends AbstractController
        
         ]);
     }
+
+
+       /**
+     * @Route("/show/message", name="show_message")
+     * @return Response
+     */
+    public function showMessage(): Response
+    {
+        $message = $this->entityManager->getRepository(Message::class)->findAll();
+    
+
+        
+        return $this->render('account/mes_messages.html.twig', [
+            'messages' => $message,
 
     /**
      * @Route("/favoris/ajout/{id}", name="ajout_favoris")
@@ -161,9 +177,29 @@ class VehicleController extends AbstractController
         
         return $this->render('account/mes_favoris.html.twig', [
             'favoris' => $favoris,
+
        
         ]);
     }
+
+
+    /**
+     * @Route("/supprimer/message/{id}", name="delete_message")
+     * @param message $message
+     * @return Response
+     */
+    public function deleteMessage(Message $message): Response
+    {
+        $this->entityManager->remove($message);
+        $this->entityManager->flush();
+
+        $this->addFlash('success', 'votre message a été supprimée !');
+
+        // return $this->redirectToRoute('account');
+
+        return $this->redirectToRoute('account');
+        }
+
 
 
 /**
@@ -190,6 +226,7 @@ class VehicleController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
 
 
 
