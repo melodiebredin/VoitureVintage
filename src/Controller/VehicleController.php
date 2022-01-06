@@ -141,47 +141,47 @@ class VehicleController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/favoris/ajout/{id}", name="ajout_favoris")
-    //  */
-    // public function ajoutFavoris(Vehicle $vehicle)
-    // {
+    /**
+     * @Route("/favoris/ajout/{id}", name="ajout_favoris")
+     */
+    public function ajoutFavoris(Vehicle $vehicle)
+    {
         
-    //     $vehicle->addFavori($this->getUser());
+        $vehicle->addFavori($this->getUser());
 
-    //     $vehicle = $this->entityManager->persist($vehicle);
-    //     $vehicle = $this->entityManager->flush();
-    //     return $this->redirectToRoute('home');
-    // }
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
+    }
 
-    // /**
-    //  * @Route("/favoris/retrait/{id}", name="retrait_favoris")
-    //  */
-    // public function retraitFavoris(Vehicle $vehicle)
-    // {
+    /**
+     * @Route("/favoris/retrait/{id}", name="retrait_favoris")
+     */
+    public function retraitFavoris(Vehicle $vehicle)
+    {
         
-    //     $vehicle->removeFavori($this->getUser());
+        $vehicle->removeFavori($this->getUser());
 
-    //     $vehicle = $this->entityManager->persist($vehicle);
-    //     $vehicle = $this->entityManager->flush();
-    //     return $this->redirectToRoute('home');
-    // }
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
+    }
 
-// /**
-//      * @Route("/show/favoris", name="show_favoris")
-//      * @return Response
-//      */
-//     public function showFavoris(): Response
-//     {
-//         $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
-//         //dd($favoris);
+/**
+     * @Route("/show/favoris", name="show_favoris")
+     * @return Response
+     */
+    public function showFavoris(): Response
+    {
+        $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
+        //dd($favoris);
 
         
-//         return $this->render('account/mes_favoris.html.twig', [
-//             'favoris' => $favoris,
+        return $this->render('account/mes_favoris.html.twig', [
+            'favoris' => $favoris,
        
-//         ]);
-//     }
+        ]);
+    }
 
 
     /**

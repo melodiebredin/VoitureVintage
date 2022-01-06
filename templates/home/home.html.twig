@@ -26,23 +26,13 @@
                             </div>
                             <!--vehicle  actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path( 'single_vehicle', {'id' : vehicle.id} ) }}">View vehicle</a></div>
+                             <a class="btn btn-success mb-2" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</a>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{path('single_vehicle',{'id':vehicle.id})}}">Voir vehicle</a></div>
 
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                         </a>
-                           
-                        </div>
-                    </div>
-                </div>
-
-                                {# <div>
+                                <div>
                                     {% if is_granted("ROLE_USER") %}
                                     {% set isFavorite = false %}
-							{% for favoris in vehicles.favoris %}
+							{% for favoris in vehicle.favoris %}
                                 {% if favoris.id == app.user.id %}
                             {% set isFavorite = true %}
                         {% endif %}    
@@ -59,14 +49,12 @@
                 {% endif %}
                 
 
-            </div> #}
+            </div>
         </div>
 
     </div>
 </div>
-
-
+                    {% endfor %}
 </section>
 
 {% endblock %}
-

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+
+        <table class="table table-hover m-4">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Retirer</th>
+             
+                <th scope="col">Ajouter</th>
+                <th scope="col">Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in fullCart %}
+                <tr class="table-secondary">
+                    <th scope="row">{{ item.vehicle.name }}</th>
+                    <th>{{ item.vehicle.brand }}</th>
+                   
+
+                    <td>
+                        <a href="{{ path('deleteCart', {id:item.vehicle.id }) }}"
+                           onclick="return confirm('Etes-vous sûr de vouloir supprimer cette ligne ?')"
+                           class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if app.user %}
+
+
+        <a href="{{ path('order', {param: true}) }}" class="btn btn-warning">Valider le panier</a>
+            {% else %}
+                <a href="{{ path('login') }}" class="btn btn-success">Connectez-vous pour continuer</a>
+        {% endif %}
+ 
+        {% if total is defined %}
+            <h2><strong>Montant Total: </strong>{{ total }} €<br></h2>
+            <a href="{{ path('finalOrder', {'id': price }) }}" class="btn btn-success">Continuer ?</a>
+        {% endif %}
+
+
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
