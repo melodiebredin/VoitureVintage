@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home!{% endblock %}
+
+{% block body %}
+
+                {% for blog in blogs %}
+
+
+<section class="py-5">
+
+
+ <div class="container">
+    
+    <div class="row">
+    <p style="color:white; text-align:center">Crée le : {{ blog.createdAt | date('d/m/Y') }} </p>
+  
+       <div class ="col-sm-1"></div>  
+           <div class ="col-sm-5">
+          <div class="card">
+                     <h1 class="fw-bolder">{{blog.title}}</h1>
+        <img class="img-custom" src="{{asset ('uploads/' ~ blog.picture)}}" width="500px"style="border-radius:50px">
+             </div>
+             </div>
+            
+              <div class ="col-sm-5">
+               <div class="card">
+            <h2 class="fw-bolder">{{blog.subtitle}}</h2>
+            <p>{{blog.description}}</p>
+                                 
+                         
+                                </div>
+                            </div>
+                               </div>
+                            </div>
+
+                        
+
+                                
+                
+
+            </div>
+        </div>
+
+    </div>
+</div>
+                    {% endfor %}
+</section>
+
+{% endblock %}

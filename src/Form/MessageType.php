@@ -22,7 +22,7 @@ class MessageType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'd-block btn btn-warning mx-auto col-3'
+                    'class' => 'btn btn-dark mb-2'
                 ]
             ])
         ;

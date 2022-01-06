@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Blog;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Entity\Category;
@@ -33,11 +34,13 @@ public function __construct(EntityManagerInterface $entityManager, UserPasswordH
         $users = $this->entityManager->getRepository(User::class)->findAll();
         $vehicles = $this->entityManager->getRepository(Vehicle::class)->findAll();
         $categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $blogs = $this->entityManager->getRepository(Blog::class)->findAll();
 
         return $this->render('dashboard/dashboard.html.twig', [
             'users' => $users,
             'vehicles' => $vehicles,
             'categories' => $categories,
+            'blogs' => $blogs,
         ]);
     }
 
