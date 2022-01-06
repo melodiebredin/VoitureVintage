@@ -38,7 +38,7 @@
                         <td>
                             <a href="{{path('delete_vehicle',{'id': vehicle.id })}}" onclick="return confirm('Voulez-vous vraiment supprimer cette annonce ?')">
                             <i style="color: black;" class="bi bi-trash"></i></a> | 
-                            <a href=""><i style="color: black;" class="bi bi-pencil-square"></i>
+                            <a href="{{path('edit_vehicle',{'id': vehicle.id })}}"><i style="color: black;" class="bi bi-pencil-square"></i>
 </a>
                         </td>
                     </tr>
