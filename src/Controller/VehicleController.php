@@ -149,21 +149,21 @@ class VehicleController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-/**
-     * @Route("/show/favoris", name="show_favoris")
-     * @return Response
-     */
-    public function showFavoris(): Response
-    {
-        $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
-        //dd($favoris);
+// /**
+//      * @Route("/show/favoris", name="show_favoris")
+//      * @return Response
+//      */
+//     public function showFavoris(): Response
+//     {
+//         $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
+//         //dd($favoris);
 
         
-        return $this->render('account/mes_favoris.html.twig', [
-            'favoris' => $favoris,
+//         return $this->render('account/mes_favoris.html.twig', [
+//             'favoris' => $favoris,
        
-        ]);
-    }
+//         ]);
+//     }
 
 
 /**

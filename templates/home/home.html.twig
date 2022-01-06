@@ -26,7 +26,7 @@
                             </div>
                             <!--vehicle  actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View vehicle</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path( 'single_vehicle', {'id' : vehicle.id} ) }}">View vehicle</a></div>
 
                             </div>
                         </div>
@@ -39,10 +39,10 @@
                     </div>
                 </div>
 
-                                <div>
+                                {# <div>
                                     {% if is_granted("ROLE_USER") %}
                                     {% set isFavorite = false %}
-							{% for favoris in vehicle.favoris %}
+							{% for favoris in vehicles.favoris %}
                                 {% if favoris.id == app.user.id %}
                             {% set isFavorite = true %}
                         {% endif %}    
@@ -59,13 +59,13 @@
                 {% endif %}
                 
 
-            </div>
+            </div> #}
         </div>
 
     </div>
 </div>
 
-            {% endfor %}
+
 </section>
 
 {% endblock %}
