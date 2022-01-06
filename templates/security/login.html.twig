@@ -13,6 +13,7 @@
             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
+    
 
     <section class="vh-100 bg-image" style="background-color: #C7C8C9;">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -32,6 +33,7 @@
            value="{{ csrf_token('authenticate') }}"
     >
 
+
 <a href="{{ path('resetPassword') }}">Mot de passe oublié ?</a>
  <button class="btn mb-2 mt-3 mb-md-2 ms-4 btn-danger btn-block" type="submit">
         Se connecter
@@ -45,6 +47,7 @@
     </div>
   </div>
 </section>
+
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
