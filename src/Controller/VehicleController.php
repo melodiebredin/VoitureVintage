@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
+use App\Form\EditVehicleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -163,5 +164,33 @@ class VehicleController extends AbstractController
        
         ]);
     }
+
+
+/**
+     * @Route("/modifier/vehicle/{id}", name="edit_vehicle")
+     * @param Vehicle $vehicle
+     * @param Request $request
+     * @return Response
+     */
+    public function editVehicle(Vehicle $vehicle, Request $request): Response
+    {
+        # Supprimer le edit form et utiliser Type (configurer les options) : pas besoin de dupliquer un form
+        $form = $this->createForm(EditVehicleType::class, $vehicle)
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            # Créer une nouvelle propriété dans l'entité : setUpdatedAt()
+
+            $this->entityManager->persist($vehicle);
+            $this->entityManager->flush();
+        }
+
+        return $this->render('single_vehicle/edit_vehicle.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
 
 }
