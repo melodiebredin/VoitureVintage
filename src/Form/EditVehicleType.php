@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditArticleType extends AbstractType
+class EditVehicleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

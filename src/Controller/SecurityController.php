@@ -123,11 +123,11 @@ class SecurityController extends AbstractController
 
             // pass variables (name => value) to the template
             $email->context([
-                'message' => 'Vous avez fait une demande de réinitialisation de mot de passe, veuillez cliquer sur le liens ci dessous',
+                'message' => 'Vous avez fait une demande de réinitialisation de mot de passe, veuillez cliquer sur le lien ci dessous',
                 'nom' => "",
                 'prenom' => "",
                 'subject' => 'demande de réinitialisation',
-                'from' => 'onlyMovie@only.com',
+                'from' => 'voiturevintage1978@gmail.com',
                 'cid' => $cid,
                 'liens' => 'http://127.0.0.1:8000/resetForm?token=' . $token . '&i=' . $user->getId(),
                 'objectif' => 'Réinitialiser',
