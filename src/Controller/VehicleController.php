@@ -7,12 +7,14 @@ use App\Entity\User;
 use App\Entity\Message;
 use App\Entity\Vehicle;
 use App\Form\VehicleType;
+use App\Form\EditVehicleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
@@ -97,19 +99,18 @@ class VehicleController extends AbstractController
         $this->entityManager->remove($vehicle);
         $this->entityManager->flush();
 
-        $this->addFlash('success', 'votre annonce a été supprimée !');
+        $this->addFlash('success', 'votre vehicle a été supprimée !');
 
         return $this->redirectToRoute('account');
 
-            return $this->render('vehicle/vehicle.html.twig',[
-                'form'=> $form->createView(),
-            ]);
+            return $this->render('vehicle/vehicle.html.twig');
         }
 
 
 
-    /**
-     * @Route("/show/vehicle", name="show_article")
+
+   /**
+     * @Route("/show/vehicle", name="show_vehicle")
      * @return Response
      */
     public function showVehicle(): Response
@@ -124,6 +125,7 @@ class VehicleController extends AbstractController
         ]);
     }
 
+
        /**
      * @Route("/show/message", name="show_message")
      * @return Response
@@ -136,9 +138,50 @@ class VehicleController extends AbstractController
         
         return $this->render('account/mes_messages.html.twig', [
             'messages' => $message,
+
+    /**
+     * @Route("/favoris/ajout/{id}", name="ajout_favoris")
+     */
+    public function ajoutFavoris(Vehicle $vehicle)
+    {
+        
+        $vehicle->addFavori($this->getUser());
+
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/favoris/retrait/{id}", name="retrait_favoris")
+     */
+    public function retraitFavoris(Vehicle $vehicle)
+    {
+        
+        $vehicle->removeFavori($this->getUser());
+
+        $vehicle = $this->entityManager->persist($vehicle);
+        $vehicle = $this->entityManager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+/**
+     * @Route("/show/favoris", name="show_favoris")
+     * @return Response
+     */
+    public function showFavoris(): Response
+    {
+        $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
+        //dd($favoris);
+
+        
+        return $this->render('account/mes_favoris.html.twig', [
+            'favoris' => $favoris,
+
        
         ]);
     }
+
 
     /**
      * @Route("/supprimer/message/{id}", name="delete_message")
@@ -156,6 +199,35 @@ class VehicleController extends AbstractController
 
         return $this->redirectToRoute('account');
         }
+
+
+
+/**
+     * @Route("/modifier/vehicle/{id}", name="edit_vehicle")
+     * @param Vehicle $vehicle
+     * @param Request $request
+     * @return Response
+     */
+    public function editVehicle(Vehicle $vehicle, Request $request): Response
+    {
+        # Supprimer le edit form et utiliser Type (configurer les options) : pas besoin de dupliquer un form
+        $form = $this->createForm(EditVehicleType::class, $vehicle)
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            # Créer une nouvelle propriété dans l'entité : setUpdatedAt()
+
+            $this->entityManager->persist($vehicle);
+            $this->entityManager->flush();
+        }
+
+        return $this->render('single_vehicle/edit_vehicle.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
 
 
 }

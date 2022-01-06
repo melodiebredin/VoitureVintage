@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello mes annonces !{% endblock %}
+{% block title %}Mes annonces !{% endblock %}
 
 {% block body %}
+
+<h1 class="text-center mt-3"> Mes annonces </h1>
+
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">marque</th>
+                    <th scope="col">nom</th>
                     <th scope="col">model</th>
                     <th scope="col">marque</th>
                     <th scope="col">Description</th>
@@ -17,7 +20,7 @@
             <tbody>
                 {% for vehicle in vehicles %}
                     <tr>
-                        <td title="{{vehicle.brand}}">
+                        <td title="{{vehicle.name}}">
                             {{vehicle.brand | length > 40 ? vehicle.brand|slice(0, 40) ~ '...' : vehicle.brand}}
                         </td>
                         <td title="{{vehicle.model}}">
@@ -35,7 +38,7 @@
                         <td>
                             <a href="{{path('delete_vehicle',{'id': vehicle.id })}}" onclick="return confirm('Voulez-vous vraiment supprimer cette annonce ?')">
                             <i style="color: black;" class="bi bi-trash"></i></a> | 
-                            <a href=""><i style="color: black;" class="bi bi-pencil-square"></i>
+                            <a href="{{path('edit_vehicle',{'id': vehicle.id })}}"><i style="color: black;" class="bi bi-pencil-square"></i>
 </a>
                         </td>
                     </tr>
