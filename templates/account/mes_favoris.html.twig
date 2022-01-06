@@ -4,6 +4,47 @@
 
 {% block body %}
 
+<h1 class="text-center mt-3"> Mes annonces </h1>
 
-        
-        {% endblock %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">nom</th>
+                    <th scope="col">model</th>
+                    <th scope="col">marque</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Illustration</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in favoris %}
+                    <tr>
+                        <td title="{{vehicle.name}}">
+                            {{vehicle.brand | length > 40 ? vehicle.brand|slice(0, 40) ~ '...' : vehicle.brand}}
+                        </td>
+                        <td title="{{vehicle.model}}">
+                            {{vehicle.model | length > 40 ? vehicle.model|slice(0, 40) ~ '...' : vehicle.model}}
+                        </td>
+                        <td title="{{vehicle.brand}}">
+                            {{vehicle.brand | length > 40 ? vehicle.brand|slice(0, 40) ~ '...' : vehicle.brand}}
+                        </td>
+                        <td title="{{vehicle.description}}">
+                            {{vehicle.description | length > 40 ? vehicle.description|slice(0, 40) ~ '...' : vehicle.description}}
+                        </td>
+                        <td>
+                        <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}"  width="100px">
+                        </td>
+                        <td>
+                            <a href="{{path('delete_vehicle',{'id': vehicle.id })}}" onclick="return confirm('Voulez-vous vraiment supprimer cette annonce ?')">
+                            <i style="color: black;" class="bi bi-trash"></i></a> | 
+                            <a href="{{path('edit_vehicle',{'id': vehicle.id })}}"><i style="color: black;" class="bi bi-pencil-square"></i>
+</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

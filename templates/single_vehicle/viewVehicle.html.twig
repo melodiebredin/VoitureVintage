@@ -50,8 +50,11 @@
             <br>
         <div>
 
-         <a href="{{ path( 'form_message', {'id' : vehicle.id} ) }}" class="btn btn-warning d-block mx-auto">Envoyer un message</a>
+        <a href="{{ path( 'form_message', {'id' : vehicle.id} ) }}" class="btn btn-warning d-block mx-auto mb-3">Envoyer un message</a>
         
+        <a class="btn btn-danger d-block mx-auto mb-3" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</a>
+
+
         </div>
         </div>
         </div>

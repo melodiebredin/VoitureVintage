@@ -109,10 +109,11 @@ class Vehicle
 
 
 
+
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-
         $this->favoris = new ArrayCollection();
     }
 
@@ -360,7 +361,5 @@ class Vehicle
 
         return $this;
     }
-
-
 
 }
