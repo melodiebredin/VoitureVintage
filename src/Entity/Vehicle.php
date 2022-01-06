@@ -101,6 +101,7 @@ class Vehicle
      */
     private $name;
 
+
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="favoris")
      */
@@ -111,6 +112,7 @@ class Vehicle
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+
         $this->favoris = new ArrayCollection();
     }
 
@@ -333,6 +335,7 @@ class Vehicle
 
         return $this;
     }
+
 
     /**
      * @return Collection|User[]

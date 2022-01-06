@@ -264,6 +264,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     public function getToken(): ?string
     {
         return $this->token;
@@ -275,6 +276,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
     /**
      * @return Collection|Vehicle[]
@@ -302,6 +304,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
 
 }
