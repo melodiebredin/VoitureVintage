@@ -58,11 +58,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Vehicle::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $vehicles;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $token;
@@ -77,10 +72,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $orders;
 
+
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->vehicles = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->orders = new ArrayCollection();
     }
@@ -240,37 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Vehicle[]
-     */
-    public function getVehicles(): Collection
-    {
-        return $this->vehicles;
-    }
-
-    public function addVehicle(Vehicle $vehicle): self
-    {
-        if (!$this->vehicles->contains($vehicle)) {
-            $this->vehicles[] = $vehicle;
-            $vehicle->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVehicle(Vehicle $vehicle): self
-    {
-        if ($this->vehicles->removeElement($vehicle)) {
-            // set the owning side to null (unless already changed)
-            if ($vehicle->getUser() === $this) {
-                $vehicle->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-
     public function getToken(): ?string
     {
         return $this->token;
@@ -340,6 +305,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+
+
+
+
+
 
 
 

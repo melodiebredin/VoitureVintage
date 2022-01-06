@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,7 +23,7 @@ class Order
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orders")
@@ -30,23 +32,28 @@ class Order
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="orders", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="orders")
      */
-    private $cart;
+    private $carts;
+
+    public function __construct()
+    {
+        $this->carts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->date;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->createdAt = $createdAt;
+        $this->date = $date;
 
         return $this;
     }
@@ -63,24 +70,32 @@ class Order
         return $this;
     }
 
-    public function getCart(): ?Cart
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
     {
-        return $this->cart;
+        return $this->carts;
     }
 
-    public function setCart(?Cart $cart): self
+    public function addCart(Cart $cart): self
     {
-        // unset the owning side of the relation if necessary
-        if ($cart === null && $this->cart !== null) {
-            $this->cart->setOrders(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($cart !== null && $cart->getOrders() !== $this) {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
             $cart->setOrders($this);
         }
 
-        $this->cart = $cart;
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getOrders() === $this) {
+                $cart->setOrders(null);
+            }
+        }
 
         return $this;
     }
