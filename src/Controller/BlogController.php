@@ -72,6 +72,9 @@ class BlogController extends AbstractController
             
             $this->entityManager->persist($blog);
             $this->entityManager->flush();
+            $this->addFlash('success', 'L\'article a été enregistré');
+            return $this->redirectToRoute('dashboard');
+
         }
 
 
