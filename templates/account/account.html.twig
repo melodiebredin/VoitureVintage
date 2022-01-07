@@ -3,28 +3,31 @@
 {% block title %}Mon compte{% endblock %}
 
 {% block body %}
-<div class="container">
 
-    <div class="card" style="border-radius: 15px;">
-    <h1 class="text-center"> Bienvenue {{app.user.firstname}} {{app.user.lastname}}</h1>
-</div>
-</div>
-<section class="vh-100 bg-image" style="background-color: #C7C8C9;">
-  
+
+   <section class="py-5">
+  <div class="mask d-flex align-items-center h-80 gradient-custom-3">
+    <div class="container h-80">
+      <div class="row d-flex justify-content-center align-items-center h-80">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <a href="{{path('show_vehicle')}}
-" class="btn mb-2 mb-md-0 btn-outline-secondary btn-block">Voir mes annonces</a>
+            <div class="card-body p-6"style="text-align:center">
+          <h1 class="text-center"> Bienvenue {{app.user.firstname}} {{app.user.lastname}}</h1>
+                   <img src="{{ asset('assets/img/vintage-car.png') }}"style="width:100px; height: 100px;">
+                    </div>
+
+                                <div class="card-body p-5" style="text-align:center">
+              <a href="{{path('show_vehicle')}}" class="btn btn-dark mb-2">Voir mes annonces</a>
+           
+              
+                            <a href="{{path('show_message')}}" class="btn btn-dark mb-2">Voir mes messages</a>
             </div>
-              </div>
-
-              <div class="card" style="border-radius: 15px;"></div>
-              <div>
-              <a href="{{path('show_message')}}" class="btn mb-2 mb-md-0 btn-outline-secondary btn-block">Voir mes messages</a>
-
-
-
-              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
   
           {# <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">

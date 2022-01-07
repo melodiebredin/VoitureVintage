@@ -43,7 +43,7 @@ class RegisterType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Inscription',
-                'attr' => ['class' => 'btn mb-2 mb-md-0 btn-outline-dark btn-block']
+                'attr' => ['class' => 'btn btn-dark mb-2']
             ]);
     }
 

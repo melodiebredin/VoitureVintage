@@ -40,7 +40,7 @@ class MessageController extends AbstractController
                 $entityManager->persist($message);
                 $entityManager->flush();
 
-                $this->addFlash('success', "Vous avez commentez l'annonce !");
+                $this->addFlash('success', "Vous avez envoyez un message !");
                 return $this->redirectToRoute('single_vehicle', 
                 [
                  'id' => $vehicule->getId()

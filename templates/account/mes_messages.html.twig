@@ -3,6 +3,13 @@
 {% block title %}Hello mes messages !{% endblock %}
 
 {% block body %}
+   <section class="py-5">
+  <div class="mask d-flex align-items-center h-80 gradient-custom-3">
+    <div class="container h-80">
+      <div class="row d-flex justify-content-center align-items-center h-80">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-9">
         <table class="table">
             <thead>
                 <tr>
@@ -38,5 +45,11 @@
                 {% endfor %}
             </tbody>
         </table>
-        
+                                    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </section>
         {% endblock %}

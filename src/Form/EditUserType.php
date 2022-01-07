@@ -51,7 +51,7 @@ class EditUserType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
-                'attr' => ['class' => 'btn-dark']
+                'attr' => ['class' => 'btn btn-dark mb-2']
 
             ]);
     }

@@ -1,13 +1,17 @@
   <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container px-4 px-lg-5">
+
+            <img src="{{ asset('assets/img/vintage-car.png') }}"style="width:80px; height: 80px; ">
+
                 <a class="navbar-brand" href="{{path('home')}}">Voiture Vintage</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{path('home')}}">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{path('vehicle')}}">Deposer une Annonce</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Actualité</a></li>
+
+                       <a class="btn btn-dark mb-2" href="{{path('vehicle')}}">Deposer une Annonce</a>
+                        <li class="nav-item"><a class="nav-link" href="{{path('show_blog')}}">Actualité</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{path('emailForm')}}">Nous contacter</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('assets/img/utilisateur.png') }}"style="width:30px; height: 30px; ">
@@ -36,14 +40,16 @@
                   
                             <a class="btn btn-outline-dark" href="{{ path('fullCart') }}"><i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill"></span></a>
+
+                            <span class="badge text-white ms-1 rounded-pill" style="background-color:black">0</span></a>
+
                        
                     </form>
                 </div>
             </div>
         </nav>
 
-        <div class="container">
+    
 <div  class="col-sm-12 col-lg-12 col-xl-12">
         {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -62,7 +68,7 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
+                    <h1 class="display-4 fw-bolder">Shop now</h1>
                     <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
                 </div>
                   </div>

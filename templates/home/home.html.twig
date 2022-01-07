@@ -10,14 +10,15 @@
 
                 {% for vehicle in vehicles %}
                     <div class="col mb-5">
-                        <div class="card h-80">
+                        <div class="card1">
                             <!-- vehicle image-->
-                            <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}" width="200px">
+                            <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}" max-width="100%" border="10px">
 
 
                             <!-- vehicle details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
+                                <h1 class="fw-bolder">{{vehicle.brand}}</h1>
                                     <!-- vehicle name-->
                                     <h5 class="fw-bolder">{{vehicle.name}}</h5>
                                     <!-- vehicle price-->
@@ -26,7 +27,7 @@
                             </div>
                             <!--vehicle  actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                             <a class="btn btn-success mb-2" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</a>
+                             <button type="button" class="btn btn-dark mb-2" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</button>
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{path('single_vehicle',{'id':vehicle.id})}}">Voir vehicle</a></div>
 
                                 <div>

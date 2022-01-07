@@ -73,7 +73,7 @@ class EditVehicleType extends AbstractType
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Ajouter',
-            'attr' => ['class' => 'btn btn-warning d-block mx-auto my-3 col-4']
+            'attr' => ['class' => 'btn btn-dark mb-2']
         ]);
         
     }

@@ -10,22 +10,22 @@
 
 {% for vehicle in singleVehicle %}
 
-<li class="list-group-item text-center text-muted">Crée le : {{ vehicle.createdAt | date('d/m/Y') }} | Par : {{ vehicle.user.firstname }} {{ vehicle.user.lastname }}</li>
+   <section class="py-5">
+  <div class="row">
+    
+<p style="color:white; text-align:center">Crée le : {{ vehicle.createdAt | date('d/m/Y') }} | Par : {{ vehicle.user.firstname }} {{ vehicle.user.lastname }}</p>
   
-    <hr>
-    </div>
-    <div class= "container-fluid">
-    <div class="row">
     <div class ="col-sm-1"></div>
             <div class ="col-sm-7">
             <div class="card">
-            <h1 class="text-center">{{vehicle.model}}</h1></div>
-            <h1 class="text-center">{{vehicle.brand}}</h1> ajouter le nom
+            <h1>{{vehicle.model}}</h1></div>
+            <h1 style="color:white">{{vehicle.brand}}</h1>
+            <h5 style="color:white">{{vehicle.name}}</h5>
             <br>
-             <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}"  width="400px">
+             <img class="img-custom" src="{{asset ('uploads/' ~ vehicle.picture)}}"  width="700px" style="border-radius:20px">
             <br>
             </div>
-            <div class ="col-sm-3 bg-primary">
+            <div class ="col-sm-3">
             <br>
         <div class="card">
             <p>Année: {{vehicle.year}}</p>
@@ -40,7 +40,7 @@
               </div>
               <br>
            <div class="card">
-            <p>Prix: {{vehicle.price}}</p>
+            <p>Prix: {{vehicle.price}} Euros</p>
              </div>
              <br>
            <div class="card">
@@ -49,23 +49,22 @@
              <br>
             <br>
         <div>
+<div class="card">
+         <a href="{{ path( 'form_message', {'id' : vehicle.id} ) }}" class="btn btn-outline-light mt-auto">Envoyer un message</a>
+         <br>
+
+
+         <button type="button" class="btn btn-outline-light mt-auto" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</button>
 
         <a href="{{ path( 'form_message', {'id' : vehicle.id} ) }}" class="btn btn-warning d-block mx-auto mb-3">Envoyer un message</a>
         
-        <a class="btn btn-danger d-block mx-auto mb-3" href="{{ path('addCart', {id: vehicle.id, route : 'home'}) }}">Ajouter au panier</a>
-
-
-        </div>
-        </div>
-        </div>
-        </div>
-          </div>
-          </div>
  
 
+        </div>
+        </div>
+        </div>
+        </div>
 
-
-  
 
 
     {% endfor %}
