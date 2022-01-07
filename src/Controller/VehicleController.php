@@ -80,6 +80,9 @@ class VehicleController extends AbstractController
 
             $this->entityManager->persist($vehicle);
             $this->entityManager->flush();
+            $this->addFlash('success', 'votre annonce a été prise en compte !');
+
+            return $this->redirectToRoute('home');
         }
 
 
@@ -168,17 +171,17 @@ class VehicleController extends AbstractController
     }
 
 /**
-     * @Route("/show/favoris", name="show_favoris")
+     * @Route("/favoris", name="mes_favoris")
      * @return Response
      */
-    public function showFavoris(): Response
+    public function mesFavoris(): Response
     {
-        $favoris = $this->entityManager->getRepository(Vehicle::class)->findAll();
-        //dd($favoris);
+        $vehicle = $this->entityManager->getRepository(Vehicle::class)->findAll();
+
 
         
         return $this->render('account/mes_favoris.html.twig', [
-            'favoris' => $favoris,
+            'favoris' => $vehicle,
        
         ]);
     }

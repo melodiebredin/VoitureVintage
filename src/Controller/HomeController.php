@@ -44,28 +44,30 @@ class HomeController extends AbstractController
     public function addCart($id, PanierService $panierService, $route)
     {
         $panierService->add($id);
+    
 
         ($panierService->getFullCart());
-
+        
         if ($route == 'home'):
+            $this->addFlash('success', 'produit ajouté au panier');
             return $this->redirectToRoute('home');
         else:
+            $this->addFlash('success', 'produit ajouté au panier');
             return $this->redirectToRoute('fullCart');
         endif;
-
     }
 
-    // /**
-    //  * @Route("/removeCart/{id}", name="removeCart")
-    //  *
-    //  */
-    // public function removeCart($id, PanierService $panierService)
-    // {
-    //     $panierService->remove($id);
-    //     return $this->redirectToRoute('fullCart');
+    /**
+     * @Route("/removeCart/{id}", name="removeCart")
+     *
+     */
+    public function removeCart($id, PanierService $panierService)
+    {
+        $panierService->remove($id);
+        return $this->redirectToRoute('fullCart');
 
 
-    // }
+    }
 
     /**
      * @Route("/deleteCart/{id}", name="deleteCart")
@@ -91,9 +93,11 @@ class HomeController extends AbstractController
 
         $fullCart = $panierService->getFullCart();
 
+        $total=$panierService->getTotal();
+
         return $this->render('home/fullCart.html.twig', [
             'fullCart' => $fullCart,
-
+            'total'=>$total
 
         ]);
 
@@ -102,23 +106,20 @@ class HomeController extends AbstractController
 
     /**
      *
-     * @Route("/finalOrder/{id}", name="finalOrder")
+     * @Route("/finalOrder", name="finalOrder")
      *
      */
-    public function order( PanierService $panierService, EntityManagerInterface $manager, $id = null)
+    public function order( PanierService $panierService, EntityManagerInterface $manager)
     {
 
-
-        if ($id):
-
             $order = new Order();
-            $order->setCreatedAt(new \DateTime())->setUser($this->getUser());
+            $order->setDate(new \DateTime())->setUser($this->getUser());
             $panier = $panierService->getFullCart();
 
             foreach ($panier as $item):
 
                 $cart = new Cart();
-                $cart->setOrders($order);
+                $cart->setOrders($order)->setVehicle($item['vehicle']);
                 $manager->persist($cart);
                 $panierService->delete($item['vehicle']->getId());
             endforeach;
@@ -128,7 +129,6 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('home');
 
 
-        endif;
 
 
     }

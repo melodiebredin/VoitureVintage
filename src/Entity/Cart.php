@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,40 +23,23 @@ class Cart
     private $vehicle;
 
     /**
-     * @ORM\OneToOne(targetEntity=Order::class, inversedBy="cart", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="carts")
      */
     private $orders;
-
-    public function __construct()
-    {
-        $this->vehicle = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection|Vehicle[]
-     */
-    public function getVehicle(): Collection
+    public function getVehicle(): ?Vehicle
     {
         return $this->vehicle;
     }
 
-    public function addVehicle(Vehicle $vehicle): self
+    public function setVehicle(?Vehicle $vehicle): self
     {
-        if (!$this->vehicle->contains($vehicle)) {
-            $this->vehicle[] = $vehicle;
-        }
-
-        return $this;
-    }
-
-    public function removeVehicle(Vehicle $vehicle): self
-    {
-        $this->vehicle->removeElement($vehicle);
+        $this->vehicle = $vehicle;
 
         return $this;
     }
