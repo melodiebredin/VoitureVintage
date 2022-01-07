@@ -1,4 +1,4 @@
-  <!-- Navigation-->
+<!-- Navigation-->
  
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container px-4 px-lg-5">
@@ -9,8 +9,9 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-
+                    {% if not is_granted('ROLE_ADMIN') %}
                        <a class="btn btn-dark mb-2" href="{{path('vehicle')}}">Deposer une Annonce</a>
+                    {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{{path('show_blog')}}">Actualité</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{path('emailForm')}}">Nous contacter</a></li>
                         <li class="nav-item dropdown">
@@ -21,12 +22,12 @@
                                 <li><a class="dropdown-item" href="{{ path('register') }}">Inscription</a></li>
                                 <li><a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a></li>
                                 {% else %}{# Sinon tu affiche deconnexion et mon compte #}
-
+                                {% if not is_granted('ROLE_ADMIN') %}
                                 <li><a class="dropdown-item" href="{{ path('account') }}">Mon compte</a></li>
                                 <li><hr class="dropdown-divider"></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
-
-                            {% endif %}
+                                {% endif %}
 
                             {% if is_granted('ROLE_ADMIN') %}
                             <li><hr class="dropdown-divider" /></li>
@@ -39,9 +40,7 @@
                     <form class="d-flex">
                   
                             <a class="btn btn-outline-dark" href="{{ path('fullCart') }}"><i class="bi-cart-fill me-1"></i>
-                            Cart
-
-            </a>
+                            Cart</a>
 
                        
                     </form>
@@ -68,8 +67,11 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
+
                     <h1 class="display-4 fw-bolder">Vivez vintage</h1>
                     <p class="lead fw-normal text-dark-50 mb-0">Achetez, vendez votre véhicule de collection</p>
+
+
                 </div>
                   </div>
             </div>
